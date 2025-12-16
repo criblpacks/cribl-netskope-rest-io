@@ -1,0 +1,12 @@
+nOwH76:
+  sampleName: netskope_alert
+  created: 1765589230265
+  isPackOnly: true
+  size: 4317
+  numEvents: 1
+ehsJxN:
+  sampleName: netskope_event
+  created: 1765829001498
+  isPackOnly: true
+  size: 694
+  numEvents: 1

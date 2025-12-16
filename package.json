@@ -1,0 +1,1 @@
+{"version":"1.0.0","tags":{"streamtags":[],"dataType":["logs"]},"exports":[],"displayName":"Netskope Rest Collector IO","description":"Collector Pack to process Netskope Alerts and Events", "author":"Cribl Packs Team","name":"cribl-netskope-rest-io","minLogStreamVersion":"4.15.0"}

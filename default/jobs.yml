@@ -1,0 +1,200 @@
+in_netskope_alerts:
+  type: collection
+  ttl: 4h
+  ignoreGroupJobsLimit: false
+  removeFields: []
+  resumeOnBoot: false
+  schedule:
+    cronSchedule: "*/15 * * * *"
+    maxConcurrentRuns: 1
+    skippable: false
+    resumeMissed: true
+    run:
+      rescheduleDroppedTasks: true
+      maxTaskReschedule: 1
+      logLevel: info
+      jobTimeout: "0"
+      mode: run
+      timeRangeType: relative
+      timeWarning: {}
+      expression: "true"
+      minTaskSize: 1MB
+      maxTaskSize: 10MB
+      stateTracking: {}
+      timestampTimezone: UTC
+      earliest: ""
+      latest: ""
+    enabled: false
+  streamtags: []
+  workerAffinity: false
+  collector:
+    conf:
+      discovery:
+        discoverType: list
+        itemList:
+          - uba
+          - securityassessment
+          - quarantine
+          - remediation
+          - policy
+          - malware
+          - malsite
+          - compromisedcredential
+          - ctep
+          - dlp
+          - watchlist
+      collectMethod: get
+      pagination:
+        type: none
+      authentication: none
+      timeout: 0
+      useRoundRobinDns: false
+      disableTimeFilter: true
+      decodeUrl: true
+      rejectUnauthorized: false
+      captureHeaders: false
+      stopOnEmptyResults: false
+      safeHeaders: []
+      retryRules:
+        type: backoff
+        interval: 1000
+        limit: 10
+        multiplier: 2
+        maxIntervalMs: 40000
+        codes:
+          - 429
+          - 503
+          - 409
+        enableHeader: true
+        retryConnectTimeout: false
+        retryConnectReset: false
+        retryHeaderName: retry-after
+      __scheduling:
+        stateTracking: {}
+      collectUrl: "`${C.vars['netskope_tenant_url']}` +
+        `/api/v2/events/dataexport/alerts/${id}`"
+      collectRequestParams:
+        - name: operation
+          value: "`next`"
+        - name: index
+          value: "`${C.vars['netskope_alerts_index']}`"
+      collectRequestHeaders:
+        - name: Accept
+          value: "'application/json'"
+        - name: Netskope-Api-Token
+          value: "`${C.vars['netskope_api_token']}`"
+    destructive: false
+    type: rest
+  input:
+    type: collection
+    staleChannelFlushMs: 10000
+    sendToRoutes: true
+    preprocess:
+      disabled: true
+    throttleRatePerSec: "0"
+    breakerRulesets:
+      - Netskope API Ruleset
+    metadata:
+      - name: __packsource
+        value: "'cribl-netskope-rest-io.alerts'"
+  savedState: {}
+  notifications: []
+in_netskope_events:
+  type: collection
+  ttl: 4h
+  ignoreGroupJobsLimit: false
+  removeFields: []
+  resumeOnBoot: false
+  schedule:
+    cronSchedule: "*/5 * * * *"
+    maxConcurrentRuns: 1
+    skippable: false
+    resumeMissed: true
+    run:
+      rescheduleDroppedTasks: true
+      maxTaskReschedule: 1
+      logLevel: info
+      jobTimeout: "0"
+      mode: run
+      timeRangeType: relative
+      timeWarning: {}
+      expression: "true"
+      minTaskSize: 1MB
+      maxTaskSize: 10MB
+      stateTracking: {}
+      timestampTimezone: UTC
+    enabled: false
+  streamtags: []
+  workerAffinity: false
+  collector:
+    conf:
+      discovery:
+        discoverType: list
+        itemList:
+          - application
+          - audit
+          - incident
+          - infrastructure
+          - network
+          - page
+      collectMethod: get
+      pagination:
+        type: none
+        pageField: page
+        sizeField: size
+        size: 50
+        maxPages: 50
+        zeroIndexed: false
+      authentication: none
+      timeout: 0
+      useRoundRobinDns: false
+      disableTimeFilter: true
+      decodeUrl: true
+      rejectUnauthorized: false
+      captureHeaders: false
+      stopOnEmptyResults: false
+      safeHeaders: []
+      retryRules:
+        type: backoff
+        interval: 1000
+        limit: 5
+        multiplier: 2
+        maxIntervalMs: 20000
+        codes:
+          - 429
+          - 503
+          - 409
+        enableHeader: true
+        retryConnectTimeout: false
+        retryConnectReset: false
+        retryHeaderName: retry-after
+      __scheduling:
+        stateTracking: {}
+      collectUrl: "`${C.vars['netskope_tenant_url']}` +
+        `/api/v2/events/dataexport/events/${id}`"
+      collectRequestParams:
+        - name: operation
+          value: "`next`"
+        - name: index
+          value: "`${C.vars['netskope_events_index']}`"
+      collectRequestHeaders:
+        - name: Accept
+          value: "'application/json'"
+        - name: Netskope-Api-Token
+          value: "`${C.vars['netskope_api_token']}`"
+    destructive: false
+    type: rest
+  input:
+    type: collection
+    staleChannelFlushMs: 10000
+    sendToRoutes: true
+    preprocess:
+      disabled: true
+    throttleRatePerSec: "0"
+    breakerRulesets:
+      - Netskope API Ruleset
+    metadata:
+      - name: __packsource
+        value: "'cribl-netskope-rest-io.events'"
+  savedState: {}
+  notifications: []

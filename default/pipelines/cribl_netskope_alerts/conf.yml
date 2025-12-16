@@ -1,0 +1,71 @@
+output: default
+streamtags: []
+groups:
+  Znskux:
+    name: Enable for Splunk output format
+    disabled: true
+    index: 3
+asyncFuncTimeout: 1000
+functions:
+  - id: comment
+    filter: "true"
+    disabled: null
+    conf:
+      comment: Parse and remove null fields for Netskope Alerts
+  - id: comment
+    filter: "true"
+    disabled: null
+    conf:
+      comment: "Author: Cribl Packs Team"
+  - id: serde
+    filter: "true"
+    disabled: null
+    conf:
+      mode: extract
+      type: json
+      srcField: _raw
+      fieldFilterExpr: value !== '' && value !== null
+      keep: []
+  - id: comment
+    filter: "true"
+    disabled: true
+    conf:
+      comment: Re-serialize back into _raw
+    groupId: Znskux
+  - id: serialize
+    filter: "true"
+    disabled: true
+    conf:
+      type: json
+      dstField: _raw
+      fields:
+        - "!__*"
+        - "!_*"
+        - "!host"
+        - "!source"
+        - "!sourcetype"
+        - "!cribl_*"
+        - "*"
+    groupId: Znskux
+  - id: eval
+    filter: "true"
+    disabled: true
+    conf:
+      remove:
+        - "*"
+      keep:
+        - _*
+        - cribl_*
+        - host
+        - source
+        - sourcetype
+        - activity
+      add:
+        - disabled: false
+          name: index
+          value: index || C.vars['netskope_default_splunk_index']
+        - disabled: false
+          name: sourcetype
+          value: sourcetype || 'netskope:alerts'
+    groupId: Znskux
+description: ""

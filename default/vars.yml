@@ -1,0 +1,24 @@
+netskope_tenant_url:
+  type: string
+  lib: custom
+  value: "'https://YOUR_NETSKOPE_SUBDOMAIN.goskope.com'"
+  description: "REQUIRED: Full Netskope URL"
+netskope_api_token:
+  type: encryptedString
+  lib: custom
+  value: "YOUR_NETSKOPE_API_TOKEN"
+  description: "REQUIRED: Your Netskope API Token"
+netskope_alerts_index:
+  type: string
+  lib: custom
+  value: "'cribl_netskope_collector_alerts_index'"
+  description: "Netskope Index name for alerts"
+netskope_events_index:
+  type: string
+  lib: custom
+  value: "'cribl_netskope_collector_events_index'"
+  description: "Netskope Index name for events"
+netskope_default_splunk_index:
+  type: string
+  lib: custom
+  value: "'netskope'"

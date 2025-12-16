@@ -1,0 +1,37 @@
+id: default
+groups: {}
+comments: []
+routes:
+  - id: 09JQtE
+    name: cribl_process_netskope_alerts
+    final: true
+    disabled: false
+    pipeline: cribl_netskope_alerts
+    description: Process Netskope Alerts
+    enableOutputExpression: false
+    outputExpression: null
+    filter: __packsource == 'cribl-netskope-rest-io.alerts'
+    clones: []
+    output: default
+  - id: PIKn18
+    name: cribl_process_netskope_events
+    final: true
+    disabled: false
+    pipeline: cribl_netskope_events
+    description: Process Netskope Events
+    enableOutputExpression: false
+    outputExpression: null
+    filter: __packsource == 'cribl-netskope-rest-io.events'
+    clones: []
+    output: default
+  - id: default
+    name: default
+    final: true
+    disabled: false
+    pipeline: main
+    description: ""
+    enableOutputExpression: false
+    outputExpression: null
+    filter: "true"
+    clones: []
+    output: default
