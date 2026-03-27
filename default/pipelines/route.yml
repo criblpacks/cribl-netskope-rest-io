@@ -12,7 +12,8 @@ routes:
     outputExpression: null
     filter: __packsource == 'cribl-netskope-rest-io.alerts'
     clones: []
-    output: default
+    targetContext: group
+    output: __group
   - id: PIKn18
     name: cribl_process_netskope_events
     final: true
@@ -23,7 +24,8 @@ routes:
     outputExpression: null
     filter: __packsource == 'cribl-netskope-rest-io.events'
     clones: []
-    output: default
+    targetContext: group
+    output: __group
   - id: default
     name: default
     final: true
